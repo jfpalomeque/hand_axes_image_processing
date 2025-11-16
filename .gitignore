@@ -5,8 +5,6 @@ build/
 dist/
 wheels/
 *.egg-info
-original_images/
-uuid_images/
 
 # Virtual environments
 .venv
