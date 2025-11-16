@@ -12,6 +12,8 @@ import os
 import shutil
 import piexif
 import piexif.helper
+import json
+from PIL import Image
 
 def generate_uuid(images_folder_path):
     """
@@ -37,7 +39,7 @@ def generate_uuid(images_folder_path):
             }
     return uuid_mapping
 
-def copy_uuid_images(uuid_mapping, output_images_folder):
+def copy_uuid_images(uuid_mapping, output_images_folder, json_filename):
     """
     Creates a copy of images with UUIDs in their filenames.
     Adds the image UUID to the EXIF data of the copied images.
@@ -49,6 +51,7 @@ def copy_uuid_images(uuid_mapping, output_images_folder):
     if not os.path.exists(output_images_folder):
         os.makedirs(output_images_folder)
     total_images = len(uuid_mapping)
+    
     for n, image_file in enumerate(uuid_mapping, start=1):
         image_uuid = uuid_mapping[image_file]["image_uuid"]
         original_image_name = uuid_mapping[image_file]["original_file_name"]
@@ -63,7 +66,24 @@ def copy_uuid_images(uuid_mapping, output_images_folder):
         exif_dict['Exif'][piexif.ExifIFD.UserComment] = piexif.helper.UserComment.dump(user_comment, encoding="unicode")
         exif_bytes = piexif.dump(exif_dict)
         piexif.insert(exif_bytes, new_image_file_path)
+        # Get image size using pillow
+        
+        with Image.open(new_image_file_path) as img:
+            width, height = img.size
         print(f"Copied and updated EXIF for image: {original_image_name} {new_image_file_name}. Image {n} of {total_images}.")
+        
+        # Add image details to the coco json file
+        with open(json_filename, 'r') as f:
+            coco_data = json.load(f)
+        image_info = {
+            "id": image_uuid,
+            "file_name": new_image_file_name,
+            "width": width,
+            "height": height
+        }
+        coco_data['images'].append(image_info)
+        with open(json_filename, 'w') as f:
+            json.dump(coco_data, f, indent=4)
     
     # save the mapping to a csv file for reference on the main directory
     mapping_file_path = os.path.join(output_images_folder, "uuid_mapping.csv")
@@ -75,7 +95,7 @@ def copy_uuid_images(uuid_mapping, output_images_folder):
         print("All images copied with UUIDs in filenames and EXIF data updated.")
 
 
-def collection_uuid_generator(images_folder_path, output_images_folder):
+def collection_uuid_generator(images_folder_path, output_images_folder, json_filename):
     """
     Main function to generate UUIDs for images and copy them with updated filenames and EXIF data.
     
@@ -84,5 +104,5 @@ def collection_uuid_generator(images_folder_path, output_images_folder):
         output_images_folder (str): Path to the output folder where the mapping will be saved.
     """
     uuid_mapping = generate_uuid(images_folder_path)
-    copy_uuid_images(uuid_mapping, output_images_folder)
+    copy_uuid_images(uuid_mapping, output_images_folder, json_filename)
     return uuid_mapping

@@ -6,6 +6,13 @@ dist/
 wheels/
 *.egg-info
 
+
 # Virtual environments
 .venv
 
+# Other folders and scripts to ignore
+uuid_images_test/
+original_images_test/
+drafts/
+
+subset_test_gen.py
