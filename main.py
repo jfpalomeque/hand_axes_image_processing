@@ -6,8 +6,8 @@ import src.segment_collection_images
 
 
 dataset_info_path = "dataset_info.md"
-images_folder_path = "original_images_test"
-output_images_folder = "uuid_images_test"
+images_folder_path = "original_images"
+output_images_folder = "uuid_images"
 categories_file = []
 
 collection_info = src.coll_info.extract_collection_info(dataset_info_path)

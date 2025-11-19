@@ -10,36 +10,21 @@ This repository contains utilities and scripts to prepare and process image coll
 
 The code is lightweight and intended for researchers who want to convert archaeological image collections into formats suitable for machine learning / computer vision experiments.
 
-## 📚 Citation
+## Image format and structure
+This pipeline assumes that the original images are stored in a folder named `original_images/`. The images should be in standard formats such as JPEG or PNG. The output UUID-named images will be saved in a folder named `uuid_images/`.
+A file called dataset_info.md is used to provide collection metadata (title, year, contributor, etc.) that will be embedded into the COCO JSON header.
 
-If you use the underlying ADS bifaces data included or referenced here, please cite the original source:
-
-**Lower Palaeolithic technology, raw material and population ecology (bifaces)**
-*Gilbert Marshall, David Dupplaw, Derek Roe, Clive Gamble (2002)*
-DOI: [10.5284/1000354](https://doi.org/10.5284/1000354)
+The development was done using the mentioned ADS bifaces dataset. In this dataset, images are in JPEG format, with only one artifact per image, typically centered against a plain background. Some information and a graphic scale are included in the superior part of the image.
 
 ## How to use it
+- Clone this repository.
+- Install required dependencies using `pip install -r requirements.txt`.
+- Fill in the `dataset_info.md` file with your collection metadata.
+- Place your original images in the `original_images/` folder.
+- Run the main script: `python main.py`.
 
-Create a Python virtual environment and install dependencies. Two common options:
 
-PowerShell (Windows):
-
-```powershell
-# (preferred) create and activate venv
-python -m venv .venv; .\.venv\Scripts\Activate.ps1
-# if you have a requirements.txt
-pip install -r requirements.txt
-# OR if you manage dependencies with pyproject/poetry
-pip install poetry; poetry install
-```
-
-Then run the main processing script:
-
-```powershell
-python main.py
-```
-
-What `main.py` does (default behaviour):
+### What `main.py` does (default behaviour):
 
 - Reads collection metadata from `dataset_info.md`.
 - Generates a blank COCO JSON (uses collection metadata for description, contributor, year, etc.) and saves it as `<collection_short_name>.json` (or `coco.json`).
@@ -49,36 +34,23 @@ What `main.py` does (default behaviour):
 
 Adjust the paths inside `main.py` (or copy/extend it) to work with your own `original_images/` folder and desired output locations.
 
-## Repository contents
-
-- `main.py` — top-level runner that generates COCO JSON, creates UUID-mapped images, and runs segmentation.
-- `pyproject.toml` — project metadata / dependency configuration (if used).
-- `dataset_info.md` — short metadata used to populate the COCO JSON header.
-- `DB_overview.md` — copied dataset overview for the original bifaces dataset.
-- `bifaces_Marshall_et_al_2002.json` — exported metadata (local copy / snapshot).
-- `biface_records_online.csv` — CSV with artifact records (if generated).
-- `original_images/` and `original_images_test/` — source image folders (example/test images included).
-- `uuid_images_test/` — example output folder created by the UUID generator.
-- `src/` — library modules used by the pipeline, including:
-	- `COCO_JSON_gen.py` — COCO JSON creation utilities
-	- `UUID_generator.py` — creates UUID filenames and mapping
-	- `segment_collection_images.py` — segmentation pipeline wiring
-	- `segment_unique_object.py` — routines for single-image segmentation
-	- `coll_info.py` — collection metadata extraction
-
-## Example workflow
-
-1. Place your images in `original_images/` (or `original_images_test/` for quick tests).
-2. Edit `dataset_info.md` with collection metadata (title, year, contributor, etc.).
-3. Run `python main.py` — this will write a COCO JSON and populate `uuid_images_test/`.
+## Outputs
+- A COCO-format JSON file with collection metadata, image entries, and segmentation annotations.
+- A folder with UUID-named copies of the original images.
+- A CSV mapping original filenames to UUID filenames in directory `uuid_images/`.
 
 ## Why this repo?
 
-The Archaeology Data Service (ADS) provides vital curated datasets, but many analysis workflows require data in ML-friendly formats (COCO JSON, consistent filenames). This project bridges that gap by:
+This repository aims to facilitate the automatic preparation of large archaeological image datasets for computer vision tasks. The use of UUIDs allows the combination of multiple datasets avoiding filename collisions. Using the ADS bifaces dataset as a case study, this pipeline was able to process 10,668 images.
 
-- allowing offline, large-scale processing of archaeological image collections,
-- producing standard COCO outputs suitable for training/annotation tools,
-- keeping a clear mapping between original filenames and anonymized UUID filenames.
+
+## 📚 Citation of the original images dataset
+
+If you use the mentioned ADS bifaces data included or referenced here, please cite the original source:
+
+**Lower Palaeolithic technology, raw material and population ecology (bifaces)**
+*Gilbert Marshall, David Dupplaw, Derek Roe, Clive Gamble (2002)*
+DOI: [10.5284/1000354](https://doi.org/10.5284/1000354)
 
 ## ⚠️ Disclaimer
 
@@ -89,10 +61,7 @@ This project helps make public archaeological data easier to analyze. Redistribu
 
 ## Notes & next steps
 
-- If you want automated installation, add a `requirements.txt` or a Poetry lock file (if not present).
-- Consider adding a small example notebook or script that loads the generated COCO JSON and visualises images + annotations.
+- This is a technical demo. Next steps could include:
+  - Developing of scripts for joining multiple processed datasets while avoiding filename collisions using UUIDs.
+  - QA utilities to verify COCO JSON integrity and annotation quality.
 
-If you'd like, I can add a short usage example script or generate a minimal `requirements.txt` from `pyproject.toml`.
-
----
-Generated README for the repository.
