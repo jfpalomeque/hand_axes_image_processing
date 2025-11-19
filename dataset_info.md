@@ -14,9 +14,7 @@ Licenses:
 # Lower Palaeolithic technology, raw material and population ecology (bifaces). Gilbert Marshall, David Dupplaw, Derek Roe, Clive Gamble, 2002
 This dataset contains all the images and the artifact data from the collection **Lower Palaeolithic technology, raw material and population ecology (bifaces). Gilbert Marshall, David Dupplaw, Derek Roe, Clive Gamble, 2002**, that can be found in https://doi.org/10.5284/1000354.
 
-# Processing of the original dataset
-<Description>
 
 # Dataset Overview (from the original authors)
-
+https://archaeologydataservice.ac.uk/archives/view/bifaces/overview.cfm
 
