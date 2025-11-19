@@ -16,7 +16,6 @@ original_images_test/
 drafts/
 original_images/
 uuid_images/
-
 subset_test_gen.py
 biface_records_online.csv
 DB_overview.md
