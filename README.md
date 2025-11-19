@@ -1,6 +1,6 @@
 # Hand-axes Image Processing & COCO Generator pipeline
 
-This repository contains utilities and scripts to prepare and process image collections of archaeological artifacts for computer vision workflows. Specifically, it was initially developed to work with the Lower Palaeolithic hand-axes / bifaces dataset from the Archaeology Data Service (ADS), when bulk downloading the images and data as explained in this other [repository](repo link).
+This repository shows a technical demo of an automaic pipeline to prepare and process image collections of archaeological artifacts for computer vision workflows. Specifically, it was initially developed to work with the Lower Palaeolithic hand-axes / bifaces dataset from the Archaeology Data Service (ADS), when bulk downloading the images and data as explained in this other [repository](https://github.com/jfpalomeque/hand_axes_database_downloader).
 
  The primary goals are:
 
