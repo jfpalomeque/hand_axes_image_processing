@@ -1,6 +1,7 @@
 import src.coll_info
 import src.COCO_JSON_gen
 import src.UUID_generator
+import src.segment_collection_images
 
 
 
@@ -45,3 +46,4 @@ if not categories_file:
         json.dump(coco_data, f, indent=4)
     print("Default category 'object' with id 1 added to COCO JSON file.")
     
+src.segment_collection_images.segment_collection_images(output_images_folder, json_filename)

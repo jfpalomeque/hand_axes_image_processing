@@ -14,5 +14,7 @@ wheels/
 uuid_images_test/
 original_images_test/
 drafts/
+original_images/
+uuid_images/
 
 subset_test_gen.py

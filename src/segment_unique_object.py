@@ -4,7 +4,10 @@ for each image → find the stone, make a mask, get a box and outline
 import cv2
 import numpy as np
 
-def segment_lithic(img_path):
+def segment_unique_object(img_path):
+    """
+    Segment the unique object in the image, assuming a single object on a black background.
+    """
     img_bgr = cv2.imread(img_path)
 
     # 1) Work on a copy so we never touch the original
@@ -28,36 +31,21 @@ def segment_lithic(img_path):
     kernel_open = np.ones((3, 3), np.uint8)
     fg = cv2.morphologyEx(fg, cv2.MORPH_CLOSE, kernel_close)
     fg = cv2.morphologyEx(fg, cv2.MORPH_OPEN, kernel_open)
-
+    
     # 5) Find contours, keep biggest one (the stone)
     cnts, _ = cv2.findContours(fg, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     if not cnts:
         # No object found – return empty mask + bbox
         return np.zeros_like(gray), (0, 0, 0, 0)
-
     main_cnt = max(cnts, key=cv2.contourArea)
     
-
     # 6) Draw mask
     mask = np.zeros_like(gray)
     cv2.drawContours(mask, [main_cnt], -1, 255, thickness=cv2.FILLED)
     
-    # Plot intermediate step
-    cv2.imshow("Mask", mask)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
     # 7) Axis-aligned bounding box
     x, y, w_box, h_box = cv2.boundingRect(main_cnt)
     bbox = (x, y, w_box, h_box)
-    
-    # Plot intermediate step
-    bbox_img = img_bgr.copy()
-    cv2.rectangle(bbox_img, (x, y), (x + w_box, y + h_box), (0, 255, 0), 2)
-    cv2.imshow("Bounding Box", bbox_img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
     return mask, bbox
 
 
