@@ -1,9 +1,13 @@
 [project]
 name = "hand-axes-image-processing"
-version = "0.1.0"
-description = "Add your description here"
+version = "1.0.0"
+description = "Prepare archaeological image collections with UUID identifiers and COCO-style segmentation annotations."
 readme = "README.md"
 requires-python = ">=3.12"
+authors = [
+    { name = "Juan Francisco Palomeque-Gonzalez", email = "jfpalomeque.gonzalez@gmail.com" }
+]
+license = { text = "MIT" }
 dependencies = [
     "matplotlib>=3.10.7",
     "opencv-python>=4.12.0.88",

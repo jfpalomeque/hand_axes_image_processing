@@ -1,11 +1,11 @@
 {
     "info": {
         "description": "Lower Palaeolithic technology, raw material and population ecology (bifaces). Gilbert Marshall, David Dupplaw, Derek Roe, Clive Gamble, 2002.",
-        "url": "",
+        "url": "https://doi.org/10.5284/1000354",
         "version": "1.0.0",
         "year": 2025,
-        "contributor": "Juan Palomeque-Gonzalez <jfpalomeque.gonzalez@gmail.com>",
-        "date_created": ""
+        "contributor": "Juan Francisco Palomeque-Gonzalez <jfpalomeque.gonzalez@gmail.com>",
+        "date_created": "2025-10-18"
     },
     "licenses": [
         {
